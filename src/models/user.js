@@ -1,49 +1,35 @@
-
-
+"use strict";
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'User',
+    "User",
     {
-      firstName: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      lastName: {
-        type: DataTypes.STRING,
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       password: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
-      profilePic: {
-        type: DataTypes.STRING,
+      role: {
+        type: DataTypes.ENUM,
+        values: ["USER", "ADMIN", "ORGANIZER", "SUPER_ADMIN"],
+        allowNull: false,
       },
-      isAdmin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      verifyToken: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
-      isVerified: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-    },
-    {
-      defaultScope: {
-        attributes: { exclude: ['password', 'verifyToken', 'isAdmin'] },
-      },
-      scopes: {
-        withSecretColumns: {
-          attributes: { include: ['password', 'verifyToken', 'isAdmin'] },
+      organization_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: Organization,
+          key: "id",
         },
       },
     },
+    {}
   );
   User.associate = function (models) {
     // associations can be defined here
