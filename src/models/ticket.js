@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       purchase_date: {
-        type: DataTypes.TIMESTAMP,
-        default: NOW(),
+        type: DataTypes.DATE,
+        default: new Date(),
       },
     },
     {}
